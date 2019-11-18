@@ -12,4 +12,13 @@
     * [3.2 zookeeper的shell操作](第三单元zookeeper命令/zookeeper.md#32-zookeeper的shell操作)
     * [3.3 课程总结](第三单元zookeeper命令/zookeeper.md#33-课程总结)
     * [3.4 作业](第三单元zookeeper命令/zookeeper.md#33-作业)
+* [第8单元 第八单元 Nginx安装与配置](第八单元%20Nginx安装与配置/unit08.md)
+    * [8.1 课程导入](第八单元%20Nginx安装与配置/unit08.md#81-课程导入)
+    * [8.2 什么是nginx](第八单元%20Nginx安装与配置/unit08.md#82-什么是nginx)
+    * [8.3 nginx的安装](第八单元%20Nginx安装与配置/unit08.md#83-nginx的安装)
+    * [8.4 nginx目录结构](第八单元%20Nginx安装与配置/unit08.md#84-nginx目录结构)
+    * [8.5 nginx配置文件](第八单元%20Nginx安装与配置/unit08.md#85-nginx配置文件)
+    * [8.6 nginx虚拟主机配置](第八单元%20Nginx安装与配置/unit08.md#86-nginx虚拟主机配置)
+    * [8.7 课程小结](第八单元%20Nginx安装与配置/unit08.md#87-课程小结)
+    * [8.8 课下作业](第八单元%20Nginx安装与配置/unit08.md#88-课下作业)
  
