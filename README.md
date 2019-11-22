@@ -13,13 +13,13 @@
     * [3.3 课程总结](第三单元zookeeper命令/zookeeper.md#33-课程总结)
     * [3.4 作业](第三单元zookeeper命令/zookeeper.md#33-作业)
     
-* [第七单元Dubbo项目整合 ](第七单元Dubbo项目整合/dubbo项目整合.md#第七单元-dubbo项目整合)
+* [第7单元 Dubbo项目整合 ](第七单元Dubbo项目整合/dubbo项目整合.md#第七单元-dubbo项目整合)
     * [7.1 课程导入](第七单元Dubbo项目整合/dubbo项目整合.md#71-课程导入)
     * [7.2 创建mavan聚合dubbo项目](第七单元Dubbo项目整合/dubbo项目整合.md#72-创建mavan聚合dubbo项目)
     * [7.3 课程总结](第七单元Dubbo项目整合/dubbo项目整合.md#73-课程总结)
     * [7.4 课程作业](第七单元Dubbo项目整合/dubbo项目整合.md#74-课程作业)
     
-* [第8单元 第八单元 Nginx安装与配置](第八单元%20Nginx安装与配置/unit08.md)
+* [第8单元 Nginx安装与配置](第八单元%20Nginx安装与配置/unit08.md)
     * [8.1 课程导入](第八单元%20Nginx安装与配置/unit08.md#81-课程导入)
     * [8.2 什么是nginx](第八单元%20Nginx安装与配置/unit08.md#82-什么是nginx)
     * [8.3 nginx的安装](第八单元%20Nginx安装与配置/unit08.md#83-nginx的安装)
@@ -29,7 +29,7 @@
     * [8.7 课程小结](第八单元%20Nginx安装与配置/unit08.md#87-课程小结)
     * [8.8 课下作业](第八单元%20Nginx安装与配置/unit08.md#88-课下作业)
  
- * [第18单元购物车](第十八单元购物车/cart.md#第十八单元-购物车)
+ * [第18单元 购物车](第十八单元购物车/cart.md#第十八单元-购物车)
     * [18.1 课程导入](第十八单元购物车/cart.md#181-课程导入)
     * [18.2 创建hgshop-cart-interface接口](第十八单元购物车/cart.md#182--创建hgshop-cart-interface接口)
     * [18.3 创建hgshop-cart-service](第十八单元购物车/cart.md#183-创建hgshop-cart-service)
