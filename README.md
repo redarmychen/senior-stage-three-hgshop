@@ -9,19 +9,19 @@
     * [2.3 zookeeper安装配置](第二单元Zookeeper入门/Zookeeper入门.md#23-zookeepr安装配置)
     * [2.4 课程总结](第二单元Zookeeper入门/Zookeeper入门.md#24-课程总结)
     * [2.5 作业](第二单元Zookeeper入门/Zookeeper入门.md#25-作业) 
-    
+
 * [第3单元 Zookeeper命令](第三单元zookeeper命令/zookeeper.md#第三单元-zookeeper命令)
     * [3.1 课程导入](第三单元zookeeper命令/zookeeper.md#31-课程导入)
     * [3.2 zookeeper的shell操作](第三单元zookeeper命令/zookeeper.md#32-zookeeper的shell操作)
     * [3.3 课程总结](第三单元zookeeper命令/zookeeper.md#33-课程总结)
     * [3.4 作业](第三单元zookeeper命令/zookeeper.md#33-作业)
-    
+
 * [第7单元 Dubbo项目整合 ](第七单元Dubbo项目整合/dubbo项目整合.md#第七单元-dubbo项目整合)
     * [7.1 课程导入](第七单元Dubbo项目整合/dubbo项目整合.md#71-课程导入)
     * [7.2 创建mavan聚合dubbo项目](第七单元Dubbo项目整合/dubbo项目整合.md#72-创建mavan聚合dubbo项目)
     * [7.3 课程总结](第七单元Dubbo项目整合/dubbo项目整合.md#73-课程总结)
     * [7.4 课程作业](第七单元Dubbo项目整合/dubbo项目整合.md#74-课程作业)
-    
+
 * [第8单元 Nginx安装与配置](第八单元%20Nginx安装与配置/unit08.md)
     * [8.1 课程导入](第八单元%20Nginx安装与配置/unit08.md#81-课程导入)
     * [8.2 什么是nginx](第八单元%20Nginx安装与配置/unit08.md#82-什么是nginx)
@@ -31,6 +31,10 @@
     * [8.6 nginx虚拟主机配置](第八单元%20Nginx安装与配置/unit08.md#86-nginx虚拟主机配置)
     * [8.7 课程小结](第八单元%20Nginx安装与配置/unit08.md#87-课程小结)
     * [8.8 课下作业](第八单元%20Nginx安装与配置/unit08.md#88-课下作业)
+
+* [第10单元 Nginx转发规则](第十单元Nginx转发规则/第10单元%20Nginx%20转发规则.md#第10单元-nginx-转发规则)
+    * [10.1 nginx与rewrite规则](第十单元Nginx转发规则/第10单元%20Nginx%20转发规则.md#101-nginx与rewrite规则)
+    * [10.2 nginx连接数优化参数](第十单元Nginx转发规则/第10单元%20Nginx%20转发规则.md#102-掌握nginx连接数优化参数)
 
  * [第18单元 购物车](第十八单元购物车/cart.md#第十八单元-购物车)
     * [18.1 课程导入](第十八单元购物车/cart.md#181-课程导入)
