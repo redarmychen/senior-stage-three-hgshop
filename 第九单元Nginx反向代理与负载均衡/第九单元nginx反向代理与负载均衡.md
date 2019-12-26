@@ -26,13 +26,13 @@
 输入：curl	-v	http://www.baidu.com
 ```
 
-![access_log_1](assert\access_log_1.png)
+![access_log_1](assert/access_log_1.png)
 
 
 
 nginx接收请求，访问日志格式及存储位置为：
 
-![assert/access_log_2.png](assert\access_log_2.png)
+![access_log_2.png](assert/access_log_2.png)
 
 nginx内置变量说明：
 
@@ -53,7 +53,7 @@ $http_x_forwarded_for	//http请求携带的ip信息
 	在配置nginx.conf 的时候，有一项是指定错误日志的，默认情况下不指定也没关系，因为nginx很少有错误日志记录的。但有时出现问题时，是有必要记录一下错误日志的，方便我们排查问题。
 错误日志配置为：
 
-![error_log_1](assert\error_log_1.png)
+![error_log_1](assert/error_log_1.png)
 
 error_log 级别分为 debug, info, notice, warn, error, crit。 
 crit 记录的日志最少，而debug记录的日志最多。如果nginx遇到一些问题，比如502比较频繁出现，但是看默认的error_log并没有看到有意义的信息，那么就可以调一下错误日志的级别，当你调成error级别时，错误日志记录的内容会更加丰富。
@@ -152,7 +152,7 @@ Nginx 作为静态资源 Web 服务器部署配置, 传输非常的高效, 常�
 
 非服务器动态运行生成的文件属于静态资源。
 
-![static_resource_1](assert\static_resource_1.jpg)
+![static_resource_1](assert/static_resource_1.jpg)
 
 
 
@@ -198,7 +198,7 @@ Context:	http,	server,	location,	if in	location
 
 Nginx 将响应报文发送给客户端之前可以启用压缩功能，这能够有效地节约带宽，并提	高响应给客户端的速度。
 
-![static_resource_3](assert\static_resource_3.png)
+![static_resource_3](assert/static_resource_3.png)
 
 1. 开启gzip压缩配置
 
@@ -303,9 +303,9 @@ Nginx 将响应报文发送给客户端之前可以启用压缩功能，这能�
 
 ## 9.4 反向代理
 
-![reverse_proxy_1](assert\reverse_proxy_1.png)
+![reverse_proxy_1](assert/reverse_proxy_1.png)
 
-![reverse_proxy_2](assert\reverse_proxy_2.jpg)
+![reverse_proxy_2](assert/reverse_proxy_2.jpg)
 
 ```
 vim /etc/nginx/conf.d/proxy.conf
