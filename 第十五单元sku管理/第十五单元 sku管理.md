@@ -19,7 +19,7 @@
 
 ## 15.2 sku与spu关系
 
-![spu与sku](assert\spu与sku.png)
+![spu与sku](assert/spu与sku.png)
 
 ## 15.3 sku管理
 
