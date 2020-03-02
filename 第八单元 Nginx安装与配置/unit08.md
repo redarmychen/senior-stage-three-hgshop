@@ -52,7 +52,58 @@
 
 3、反向代理，负载均衡。当网站的访问量达到一定程度后，单台服务器不能满足用户的请求时，需要用多台服务器集群可以使用 nginx 做反向代理。并且多台服务器可以平均分担负载，不会因为某台服务器负载高宕机而某台服务器闲置的情况
 
+
+
+# Nginx的在Windows下的安装
+
+​	1、找到官网
+
+​         ![1582768502719](unit08.assets/1582768502719.png)
+
+​	2、![1582768561349](unit08.assets/1582768561349.png) 
+
+ 3. 解压即可
+
+    ![1582768641820](unit08.assets/1582768641820.png) 
+
+4、使用
+
+​	双击
+
+![1582768713090](unit08.assets/1582768713090.png) 
+
+ 5、 出现这个页码 就是安装成功了
+
+​	![1582768744490](unit08.assets/1582768744490.png)  
+
+
+
 ## 8.3 Nginx的安装
+
+### 8.3.0 nginx 安装前置条件
+
+​	nginx是C语言开发，建议在linux上运行，本教程使用Centos6.5作为安装环境。
+
+1. gcc
+   	安装nginx需要先将官网下载的源码进行编译，编译依赖gcc环境，如果没有gcc环境，需要安装gcc：yum install gcc-c++ 
+
+2. PCRE
+   	PCRE(Perl Compatible Regular Expressions)是一个Perl库，包括 perl 兼容的正则表达式库。nginx的http模块使用pcre来解析正则表达式，所以需要在linux上安装pcre库。
+   yum install -y pcre pcre-devel
+   注：pcre-devel是使用pcre开发的一个二次开发库。nginx也需要此库。
+
+   
+
+3. zlib
+   	zlib库提供了很多种压缩和解压缩的方式，nginx使用zlib对http包的内容进行gzip，所以需要在linux上安装zlib库。
+   yum install -y zlib zlib-devel
+
+4. openssl
+   	OpenSSL 是一个强大的安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。
+      	nginx不仅支持http协议，还支持https（即在ssl协议上传输http），所以需要在linux安装openssl库。
+   yum install -y openssl openssl-devel
+
+
 
 ### 8.3.1 Nginx安装
 
@@ -82,9 +133,16 @@
 
 ![1574040180811](eight/1574040180811.png) 
 
-5. 切换到安装的目录中
+5. 如果需要解压 解压命令格式：tar -zxvf nginx-1.16.1.tar.gz 
+6. 切换到安装的目录中
 
 ![1574040205396](eight/1574040205396.png) 
+
+
+
+​	
+
+
 
 
 
@@ -189,6 +247,68 @@ make && make install
 
 
 
+  -v            : show version and exit
+  -V            : show version and configure options then exit
+  -t            : test configuration and exit
+  -T            : test configuration, dump it and exit
+  -q            : suppress non-error messages during configuration testing
+  -s signal     : send signal to a master process: stop, quit, reopen, reload
+  -p prefix     : set prefix path (default: /opt/ngix/)
+  -c filename   : set configuration file (default: conf/nginx.conf)
+  -g directives : set global directives out of configuration file
+
+
+
+sbin\nginx -v  显示版本号
+
+
+
+sbin\nginx -V  显示版本号并且显示安装配置
+
+![1582773972462](unit08.assets/1582773972462.png) 
+
+
+
+ sbin/nginx -t  
+
+检查配置文件是否正确
+
+
+
+ sbin/nginx -T
+
+检查配置文件是否正确并且保存配置信息
+
+
+
+ -s signal     : send signal to a master process: stop, quit, reopen, reload
+
+ sbin/nginx  -s stop 让服务程序关闭  ， kill pid -9 
+
+ sbin/nginx  -s  quit 让服务程序优雅的关闭 
+
+ sbin/nginx  -s  reopen 重新记录日志
+
+sbin/nginx  -s  reload 重新加载配置文件
+
+sbin/nginx -c  文件名   使用指定配置文件去启动nginx 
+
+
+
+nginx 的作用
+
+![1582775263065](unit08.assets/1582775263065.png) 
+
+
+
+## 8.4 Nginx目
+
+
+
+
+
+
+
 ## 8.4 Nginx目录结构
 
 ###     8.4.1 tree命令
@@ -216,15 +336,31 @@ sbin #这是Nginx命令的目录，如Nginx的启动命令nginx
 
 ## 8.5 Nginx配置文件
 
-​		如果你下载好啦，你的安装文件，不妨打开conf文件夹的nginx.conf文件，Nginx服务器的基础配置，默认的配置也存放在此。
+如果你下载好啦，你的安装文件，不妨打开conf文件夹的nginx.conf文件，Nginx服务器的基础配置，默认的配置也存放在此。
 
-### 8.5.1 nginx.conf
+### 8.5.1 初识nginx.conf
 
-在 nginx.conf 的注释符号为： **#**
+
+
+井号作用：在 nginx.conf 的注释符号为： 
+
+   这里的注释不能使用   //  /**/  <!--   -->
+
+大括弧{}作用：
+
+分号       ：
+
+指令：
+
+模块：
+
+
+
+
 
 默认的 nginx 配置文件 nginx.conf 内容如下：
 
-```
+```properties
 #user  nobody;
 worker_processes  1;
 
@@ -345,7 +481,8 @@ http {
 
 ### 8.5.2 nginx 文件结构 
 
-```
+
+
 ...              #全局块
 
 events {         #events块
@@ -373,17 +510,25 @@ http      #http块
     }
     ...     #http全局块
 }
-```
+
+
+
+图形化表示：
+	
+	
+
+![1582846190770](unit08.assets/1582846190770.png)   
 
 - 1、**全局块**：配置影响nginx全局的指令。一般有运行nginx服务器的用户组，nginx进程pid存放路径，日志存放路径，配置文件引入，允许生成worker process数等。
 - 2、**events块**：配置影响nginx服务器或与用户的网络连接。有每个进程的最大连接数，选取哪种事件驱动模型处理连接请求，是否允许同时接受多个网路连接，开启多个网络连接序列化等。
 - 3、**http块**：可以嵌套多个server，配置代理，缓存，日志定义等绝大多数功能和第三方模块的配置。如文件引入，mime-type定义，日志自定义，是否使用sendfile传输文件，连接超时时间，单连接请求数等。
 - 4、**server块**：配置虚拟主机的相关参数，一个http中可以有多个server。
 - 5、**location块**：配置请求的路由，以及各种页面的处理情况。
+- 
 
 ### 8.5.3 nginx.conf 配置项解释
 
-```
+```properties
 ########### 每个指令必须有分号结束。#################
 #user administrator administrators;  #配置用户或者组，默认为nobody nobody。
 #worker_processes 2;                 #允许生成的进程数，默认为1
@@ -411,7 +556,7 @@ http {
     }
     error_page 404 https://www.baidu.com; #错误页
     server {
-        keepalive_requests 120;           #单连接请求上限次数。
+        keepalive_requests 120;           #同一个长连接请求上限次数。
         listen       4545;                #监听端口
         server_name  127.0.0.1;   		  #监听地址       
         location  ~*^.+$ {             #请求的url过滤，正则匹配，~为区分大小写，~*为不区分大小写。
@@ -424,6 +569,20 @@ http {
     }
 }
 ```
+
+
+
+PS 
+
+​	惊群现象:https://blog.csdn.net/zhuzg2005/article/details/104500937
+
+​      sendfile: sendfile是 Linux2.0+以后推出的一个系统调用,在两个文件描述符之间传递数据，也就是完全在内核中操作。这样就避免了内核缓冲区和用户缓冲区之间的数据拷贝，效率很高，这种技术又被称为零拷贝。
+
+​       
+
+
+
+
 
 上面是nginx的基本配置，需要注意的有以下几点：
 
