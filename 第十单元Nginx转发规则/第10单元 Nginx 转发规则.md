@@ -76,6 +76,27 @@ location ~* /js/.*/\.js
 
 
 
+
+
+location ~ ^/(images|img|javascript|js|css|flash|media|static)/ {
+
+​            root   /home/resources/;   #####静态资源的路
+
+​            access_log  off;
+​            expires     30d;           #####设置缓存时间
+​        }
+
+
+
+location ~*\\.(do)$ {
+               
+                 proxy_pass http://192.168.126.168:8080;
+   }
+
+
+
+
+
 示例配置解释:
 
 - 已`=`开头表示精确匹配

@@ -238,7 +238,7 @@ public class AnnotationAction {
 
 
 
-## 6.4.2 Zookeeper 注册中心   
+## 6.4.2 **<u>Zookeeper 注册中心</u>**   
 
 **这种方式是强烈的推荐方式。**	
 
@@ -359,6 +359,10 @@ public class AnnotationAction {
 
 ### 6.4.4.1 依赖
 
+
+
+消费者 和服务提供者都需要引入这个依赖。
+
 ```xml
 
 <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-pool2 -->
@@ -394,7 +398,9 @@ public class AnnotationAction {
 
   这个注册中心实际上就是dubbo的服务提供者
 
- Simple 注册中心本身就是一个普通的 Dubbo 服务，可以减少第三方依赖，使整体通讯方式一致。
+ **Simple** 注册中心本身就是一个普通的 Dubbo 服务，可以减少第三方依赖，使整体通讯方式一致。
+
+一个Dubbo 服务当成一个注册中心。
 
 
 
@@ -441,7 +447,17 @@ public class AnnotationAction {
 
 # 6.5 Dubbo 传输协议
 
-## 6.5.1 dubbo
+
+
+​	可以使用其中一个或者多个同时使用，
+
+​      必须记住的 dubbo  rmi  和 hessian 。 其他再记住两三个即可。
+
+​       dubbo 协议的场景要知道 ， 不适合传文件。 
+
+## 6.5.1 dubbo  
+
+​      **<u>面试必问</u>**
 
 ​	**单一长连接和 NIO 异步通讯，**适合于小数据量大并发的服务调用.
 
@@ -501,6 +517,42 @@ public class AnnotationAction {
 ```xml
 <dubbo:protocol name="hessian" port="8080" server="jetty" />
 ```
+
+需要引入额外的依赖包
+
+~~~xml
+
+ 	<dependency>
+    <groupId>com.caucho</groupId>
+    <artifactId>hessian</artifactId>
+    <version>4.0.7</version>
+    </dependency>
+```
+<dependency>
+
+<groupId>org.eclipse.jetty</groupId>
+<artifactId>jetty-server</artifactId>
+<version>9.4.23.v20191118</version>
+```
+
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlet -->
+<dependency>
+    <groupId>org.eclipse.jetty</groupId>
+    <artifactId>jetty-servlet</artifactId>
+    <version>9.4.23.v20191118</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>servlet-api</artifactId>
+    <version>2.5</version>
+    <scope>provided</scope>
+</dependency>
+~~~
+
+
 
 
 
@@ -576,12 +628,35 @@ Random LoadBalance
 
 
 
-## 6.6.2 权重轮询
+配置文件
 
-RoundRobin LoadBalance
+服务提供端
+
+	!-- 声明需要暴露的服务接口 -->
+
+<dubbo:service interface="com.zhuzg1711d.group.service.DemoService" weight="1" ref="demoService1" />
+
+消费者端
+
+	<dubbo:reference interface="com.zhuzg1711d.group.service.DemoService"
+
+ 	 		loadbalance="random" id="demoService"  />
+
+
+
+## 6.6.2 轮询
+
+RoundRobin 
+
+ <dubbo:reference interface="com.zhuzg1711d.group.service.DemoService"
+ 	 loadbalance="roundrobin" id="demoService" />
 
 轮询，按公约后的权重设置轮询比率。
 存在慢的提供者累积请求的问题，比如：第二台机器很慢，但没挂，当请求调到第二台时就卡在那，久而久之，所有请求都卡在调到第二台上。
+
+仅需要在客户端配置即可
+
+
 
 ## 6.6.3 最少活跃数
 
@@ -590,15 +665,106 @@ LeastActive LoadBalance
 最少活跃调用数，相同活跃数的随机，活跃数指调用前后计数差。
 使慢的提供者收到更少请求，因为越慢的提供者的调用前后计数差会越大。
 
+	<dubbo:reference interface="com.zhuzg1711d.group.service.DemoService"
+
+ 	 		loadbalance="leastactive" id="demoService"  timeout="4000"/>
+
+这里加timeout 是因为代码中模拟相应了时间。
+
+测试代码中可以使用sleep 模拟。
+
+服务提供者可以这样模拟
+
+```java
+@Override
+public String getNameByTime(String str) {
+	// TODO Auto-generated method stub
+	try {
+		Thread.sleep(2000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	return "2";
+}
+
+```
 ## 6.6.4 哈希一致
 
 ConsistentHash LoadBalance
 
 一致性 Hash，相同参数的请求总是发到同一提供者。
+
+只要参数相同 一定发送相同的服务器上进行处理，、
+
+不同的参数可能在一个服务器上 也可能不在同一个服务器上
+
+
+
+参数与请求的服务器是多对一的关系。
+
+
+
 当某一台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。
 算法参见：http://en.wikipedia.org/wiki/Consistent_hashing
 缺省只对第一个参数 Hash，如果要修改，请配置 <dubbo:parameter key="hash.arguments" value="0,1" />
 缺省用 160 份虚拟节点，如果要修改，请配置 <dubbo:parameter key="hash.nodes" value="320" />
+
+消费配置
+
+	<!-- 基于哈希一致算法的  -->
+ 	<dubbo:reference interface="com.zhuzg1711d.group.service.DemoService"
+ 	 		loadbalance="consistenthash" id="demoService"  /> 	
+
+测试代码：
+
+```java
+	/* 测试哈希一致 */
+	// 获取服务的引用
+	// DemoService ds = (DemoService)context.getBean("demoService");
+	
+	  for (int i = 0; i < 10; i++) { 
+		  DemoService ds =
+			  (DemoService)context.getBean("demoService");
+	  
+	  	String myStr = ds.getMyStr("aaa"); System.out.println("aaaa：myStr is :" +
+	  			myStr);
+	  }
+	  
+	  for (int i = 0; i < 10; i++) { 
+		  DemoService ds =
+			  (DemoService)context.getBean("demoService");
+	  
+	  	String myStr = ds.getMyStr("ffff"); System.out.println("ffff：myStr is :" +
+	  			myStr);
+	  }
+	  
+	  for (int i = 0; i < 10; i++) { 
+		  DemoService ds =
+			  (DemoService)context.getBean("demoService");
+	  
+	  	String myStr = ds.getMyStr("dddd"); System.out.println("dddd：myStr is :" +
+	  			myStr);
+	  }
+	  
+	  for (int i = 0; i < 10; i++) { 
+		  DemoService ds =
+			  (DemoService)context.getBean("demoService");
+	  
+	  	String myStr = ds.getMyStr("bbbb"); System.out.println("bbbb：myStr is :" +
+	  			myStr);
+	  }
+	  
+	  for (int i = 0; i < 10; i++) { 
+		  DemoService ds =
+			  (DemoService)context.getBean("demoService");
+	  
+	  	String myStr = ds.getMyStr("cccc"); System.out.println("cccc：myStr is :" +
+	  			myStr);
+	  }
+```
+
 
 ## 6.6.5 负载均衡的配置
 
@@ -673,7 +839,13 @@ dubbo 提供了多种容错机制。所谓容错是指服务消费者 调用服�
 
 ## 6.7.2 容错方案
 
-​	Failfast Cluster
+## Failover
+
+失败切换，如果调用某个服务失败以后，会继续调用其他的服务。
+
+默认情况下一共调用三次， 
+
+# Failfast Cluster
 
 快速失败，只发起一次调用，失败立即报错。通常用于非幂等性的写操作，比如新增记录。
 

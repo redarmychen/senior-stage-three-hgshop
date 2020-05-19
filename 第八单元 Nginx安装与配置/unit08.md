@@ -36,6 +36,46 @@
 
 ## 8.1 课程导入
 
+### 	代理的概念
+
+​			任务交给中间人协助处理，服务方提供者与被服务方不接触。
+
+​		        
+
+### 	正向代理
+
+​	      接受服务方指定代理人的方式，称之正向代理。
+
+​	     
+
+​	![1587694609431](D:\八维教学\senior3\教案\senior-stage-three-hgshop\第八单元 Nginx安装与配置\unit08.assets\1587694609431.png)  
+
+
+
+### 	反向代理
+
+​		由服务方指定代理者的方式，称之为反向代理。
+
+​		![1587694666292](D:\八维教学\senior3\教案\senior-stage-three-hgshop\第八单元 Nginx安装与配置\unit08.assets\1587694666292.png) 
+
+  
+
+### 	反向代理优点
+
+​		负载均衡
+
+​		安全，有效的防止攻击。
+
+​		缓存的作用：访问频度非常大的内容
+
+​		静态内容的存取。
+
+​		
+
+​		
+
+
+
 
 
 ## 8.2 什么是Nginx
@@ -85,23 +125,36 @@
 ​	nginx是C语言开发，建议在linux上运行，本教程使用Centos6.5作为安装环境。
 
 1. gcc
-   	安装nginx需要先将官网下载的源码进行编译，编译依赖gcc环境，如果没有gcc环境，需要安装gcc：yum install gcc-c++ 
+    安装nginx需要先将官网下载的源码进行编译，编译依赖gcc环境，如果没有gcc环境，需要安装gcc：
+
+     yum install gcc-c++ 
 
 2. PCRE
-   	PCRE(Perl Compatible Regular Expressions)是一个Perl库，包括 perl 兼容的正则表达式库。nginx的http模块使用pcre来解析正则表达式，所以需要在linux上安装pcre库。
+   PCRE(Perl Compatible Regular Expressions)是一个Perl库，包括 perl 兼容的正则表达式库。nginx的http模块使用pcre来解析正则表达式，所以需要在linux上安装pcre库。
    yum install -y pcre pcre-devel
    注：pcre-devel是使用pcre开发的一个二次开发库。nginx也需要此库。
 
    
 
 3. zlib
-   	zlib库提供了很多种压缩和解压缩的方式，nginx使用zlib对http包的内容进行gzip，所以需要在linux上安装zlib库。
+   zlib库提供了很多种压缩和解压缩的方式，nginx使用zlib对http包的内容进行gzip，所以需要在linux上安装zlib库。
    yum install -y zlib zlib-devel
 
 4. openssl
-   	OpenSSL 是一个强大的安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。
-      	nginx不仅支持http协议，还支持https（即在ssl协议上传输http），所以需要在linux安装openssl库。
+   OpenSSL 是一个强大的安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。
+     	nginx不仅支持http协议，还支持https（即在ssl协议上传输http），所以需要在linux安装openssl库。
    yum install -y openssl openssl-devel
+
+
+
+### ====Linux下源码安装的一般步骤
+
+ 	1. 解压
+ 	2. configure 命令 =》设置编译的选项以及安装的选项
+ 	3. make  =》 将源码编译成目标文件的过程  （类似于Java   .java 文件编译成.class 文件的过程。complie ，。）
+ 	4. make install  将目标文件拷贝安装目录的过程。
+
+​	
 
 
 
@@ -285,7 +338,7 @@ sbin\nginx -V  显示版本号并且显示安装配置
 
  sbin/nginx  -s stop 让服务程序关闭  ， kill pid -9 
 
- sbin/nginx  -s  quit 让服务程序优雅的关闭 
+ sbin/nginx  -s  quit 让服务程序优雅的关闭   
 
  sbin/nginx  -s  reopen 重新记录日志
 
@@ -360,9 +413,16 @@ sbin #这是Nginx命令的目录，如Nginx的启动命令nginx
 
 默认的 nginx 配置文件 nginx.conf 内容如下：
 
+
+
+#使用哪个用户运行工作进程
+
 ```properties
 #user  nobody;
-worker_processes  1;
+
+#工作进程数量  主进程主要控制各个工作进程  工作进程用于处理用户的请求连接
+# 通常情况下根据计算机的cpu的核数设置，有几个核就设置几。
+worker_processes  2;
 
 #error_log  logs/error.log;
 #error_log  logs/error.log  notice;
@@ -372,6 +432,7 @@ worker_processes  1;
 
 
 events {
+    #每个工作进程可以连接的最大的请求数量   2*1024 = 2048 .
     worker_connections  1024;
 }
 
@@ -483,13 +544,25 @@ http {
 
 
 
-...              #全局块
+ #全局块
 
-events {         #events块
+   配置好以后，这里的变量对整个nginx 都起作用
+
+
+
+#events块
+
+events {
    ...
 }
 
-http      #http块
+
+
+#http块  
+
+  nginx 相应http 请求如何去处理。
+
+http      
 {
     ...   #http全局块
     server        #server块
